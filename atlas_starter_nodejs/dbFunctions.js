@@ -108,8 +108,45 @@ async function getWordsForHighScoringTopics(email) {
   }
 }
 
+async function getWordsByLanguageAndTopic(languageString, topicString) {
+  const client = new MongoClient(URI, { useUnifiedTopology: true });
 
-module.exports = { addUser, addQuizHistory, checkLoginCredentials, getWordsForHighScoringTopics };
+  try {
+    await client.connect();
+    const database = client.db(dbName);
+
+    // Fetching topic details
+    const topicsCollection = database.collection(topicsCollectionName);
+    const topic = await topicsCollection.findOne({ topicName: topicString });
+
+    if (!topic) {
+      console.log("No topic found");
+      return null;
+    }
+
+    // Finding the words for the specified language
+    const languageDetails = topic.languages.find((language) => language.languageName === languageString);
+
+    if (!languageDetails) {
+      console.log("No language found");
+      return null;
+    }
+
+    // Getting the words for the specified language
+    const words = languageDetails.words;
+
+    console.log(words);
+    return words;
+  } catch (error) {
+    console.log(`An error occurred: ${error}`);
+    return null;
+  } finally {
+    await client.close();
+  }
+}
+
+
+module.exports = { addUser, addQuizHistory, checkLoginCredentials, getWordsForHighScoringTopics, getWordsByLanguageAndTopic};
 
 
 
@@ -136,4 +173,6 @@ module.exports = { addUser, addQuizHistory, checkLoginCredentials, getWordsForHi
 // }
 
 // addQuizHistory("bingbong@gmail.com", "Animals", latestQuiz)
+
+//getWordsByLanguageAndTopic("Spanish", "Animals")
   
