@@ -116,10 +116,10 @@ module.exports = { addUser, addQuizHistory, checkLoginCredentials, getWordsForHi
 
 //examples of how to use these functions
 
-//getWordsForHighScoringTopics("bingbong@gmail.com");
-
+// getWordsForHighScoringTopics("bingbong@gmail.com");
+//
 // checkLoginCredentials("sannapareddysiddharth@gmail.com", "password")
-
+//
 // newUser = {
 //     email: "bingbong@gmail.com",
 //     password: "password",
@@ -127,13 +127,13 @@ module.exports = { addUser, addQuizHistory, checkLoginCredentials, getWordsForHi
 //     language_of_choice: "Spanish",
 //     quiz_history: [],
 //   }
-
+//
 //   addUser(newUser)
-
+//
 // latestQuiz = {
 //     topic: 'Animals',
 //     score: 90,
 // }
-
+//
 // addQuizHistory("bingbong@gmail.com", "Animals", latestQuiz)
   
