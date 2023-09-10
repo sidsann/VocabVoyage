@@ -3,15 +3,37 @@ require("dotenv").config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
+// import helper functions from dbFunctions.js module
+const dbHelpers = require('./../atlas_starter_nodejs/dbFunctions');
 
-getWordsByLanguageAndTopic("Spanish", "Animals");
-// const textBody = "Today's word is \"" + "\", which is \"" + "\" in English, meaning ";
+/**
+ *
+ * @param language is the target language the user wants to learn
+ * @param category is the category the usser is interested to learn words in
+ * @param cycle specifies how many days a learning cycle consists of
+ * @returns {Promise<void>}
+ */
+async function sendSMS(language, category, cycle) {
+    dbHelpers.getWordsByLanguageAndTopic(language, category)
+        .then(wordsList => {
+            for (let i = 1; i <= cycle; i++) {
+                const textBody = "Day " + i + "\'s word is \"" + wordsList[i].GoalWord +
+                    "\", which is \"" + wordsList[i].EnglishWord +
+                    "\" in English, meaning \"" + wordsList[i].meaning + "\"";
+                client.messages
+                    .create({
+                        body: textBody,
+                        from: '+18336003823',
+                        to: '+12152602890'
+                    })
+                    .then(message => console.log(message.sid));
+            }
 
-client.messages
-    .create({
-        body: 'Test Body 123',
-        from: 'YOUR-TWILIO-#',
-        to: 'NUMBER-TO-TEXT'
-    })
-    .then(message => console.log(message.sid));
+            // Rest of your code here...
+        })
+        .catch(error => {
+            console.error("An error occurred:", error);
+        });
+}
 
+module.exports = sendSMS;
