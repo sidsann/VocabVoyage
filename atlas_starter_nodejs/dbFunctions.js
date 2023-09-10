@@ -176,3 +176,4 @@ module.exports = { addUser, addQuizHistory, checkLoginCredentials, getWordsForHi
 // addQuizHistory("bingbong@gmail.com", "Animals", latestQuiz)
 
 //getWordsByLanguageAndTopic("Spanish", "Animals")
+
