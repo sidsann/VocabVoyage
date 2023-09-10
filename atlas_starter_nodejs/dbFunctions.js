@@ -1,7 +1,9 @@
 const { MongoClient } = require("mongodb");
 require('dotenv').config();
 
-const URI = process.env.MONGODB_URI;
+//const URI = process.env.MONGODB_URI;
+const URI = 'mongodb+srv://sid:4FwQKKQk4Xbi7zLC@cluster0.5wgr2ee.mongodb.net/?retryWrites=true&w=majority'
+console.log(URI)
 const dbName = "VocabLearningPlatform";
 const usersCollectionName = "Users";
 const topicsCollectionName = "VocabTopics"; 
