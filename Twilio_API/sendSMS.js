@@ -7,13 +7,14 @@ const client = require('twilio')(accountSid, authToken);
 const dbHelpers = require('./../atlas_starter_nodejs/dbFunctions');
 
 /**
- *
+ * This function will call Twilio API and send SMS to the specified phoneNumber.
+ * Number of API calls is specified by the value of cycle.
  * @param language is the target language the user wants to learn
  * @param category is the category the usser is interested to learn words in
  * @param cycle specifies how many days a learning cycle consists of
  * @returns {Promise<void>}
  */
-async function sendSMS(language, category, cycle) {
+async function sendSMS(language, category, cycle, phoneNumber) {
     dbHelpers.getWordsByLanguageAndTopic(language, category)
         .then(wordsList => {
             for (let i = 1; i <= cycle; i++) {
@@ -24,7 +25,7 @@ async function sendSMS(language, category, cycle) {
                     .create({
                         body: textBody,
                         from: '+18336003823',
-                        to: '+12152602890'
+                        to: phoneNumber
                     })
                     .then(message => console.log(message.sid));
             }
