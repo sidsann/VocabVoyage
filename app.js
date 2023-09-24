@@ -37,7 +37,7 @@ app.listen(PORT, () => {
 
 
 // Endpoint for adding a new user during signup
-app.post('/sign-up', async (req, res) => {
+app.post('/signup', async (req, res) => {
     try {
         console.log(req.body);
         await dbFunctions.addUser(req.body);
@@ -52,6 +52,7 @@ app.post('/login', async (req, res) => {
     try {
         const user = await dbFunctions.checkLoginCredentials(req.body.email, req.body.password);
         if (user) {
+          console.log('wow thats it')
           res.status(200).send(user);
         } else {
           res.status(401).send({ error: 'Invalid credentials' });

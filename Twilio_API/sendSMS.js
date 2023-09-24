@@ -30,7 +30,6 @@ async function sendSMS(language, category, cycle, phoneNumber) {
                     .then(message => console.log(message.sid));
             }
 
-            // Rest of your code here...
         })
         .catch(error => {
             console.error("An error occurred:", error);
